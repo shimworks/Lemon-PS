@@ -4,8 +4,7 @@
   "description": "Processo seletivo Lemon",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server",
-    "dev": "nodemon ./src/server --ignore tests",
+    "start": "nodemon ./src/server --ignore tests",
     "test": "jest"
   },
   "repository": {
