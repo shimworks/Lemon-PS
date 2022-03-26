@@ -1,39 +1,28 @@
-const fields = [
-  'numeroDoDocumento',
-  'tipoDeConexao',
-  'classeDeConsumo',
-  'modalidadeTarifaria',
-  'historicoDeConsumo',
-];
-const minConsumption = { monofasico: 400, bifasico: 500, trifasico: 750 };
+const { notEligibleMsgs, accepted } = require('../../helpers/schemes');
+const {
+  minConsumption, getCO2Consumption, avgCalculator, enTranslator,
+} = require('../../helpers/functions');
 
-const acceptedClasses = [
-  'residencial',
-  'industrial',
-  'comercial',
-];
+const checkEligibility = (ptData) => {
+  const {
+    consHistory, docNum, connectionType, ...clientData
+  } = enTranslator(ptData);
 
-const acceptedTariff = [
-  'convencional',
-  'branca',
-];
+  const avgConsumption = avgCalculator(consHistory, consHistory.length);
+  const anualCO2Consumption = getCO2Consumption(consHistory);
+  const dataKeys = Object.keys(clientData);
+  const notEligibe = dataKeys.filter((key) => !accepted.includes(clientData[key]));
 
-const avgCO2gen = 0.084;
+  if (!minConsumption(avgConsumption, connectionType)) notEligibe.push(connectionType);
+  const notEligibleReasons = notEligibe.map((key) => notEligibleMsgs[key]);
 
-const checkEligibility = (data) => {
-  const consumption = data.historicoDeConsumo;
-  const consumClass = acceptedClasses.includes(data.classeDeConsumo);
-  const consumTariff = acceptedTariff.includes(data.modalidadeTarifaria);
-  const avgConsumption = (
-    consumption.reduce((pre, cur) => pre + cur, 0) / consumption.length
-  );
-  const avgCO2consumption = (avgConsumption * avgCO2gen).toFixed(2);
-
-  if (avgConsumption > minConsumption[data.tipoDeConexao]) {
-    return { code: 200, message: true };
+  if (notEligibleReasons.length) {
+    return { code: 200, response: { elegivel: false, razoesInelegibilidade: notEligibleReasons } };
   }
-  return { code: 400, message: false };
+  return { code: 200, response: { elegivel: true, economiaAnualDeCO2: anualCO2Consumption } };
 };
+
+//! fazer verificação de CPF/CNPJ e verificar tamanho minimo e maximo do historico de consumo
 
 module.exports = {
   checkEligibility,
