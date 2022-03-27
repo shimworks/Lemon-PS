@@ -1,3 +1,4 @@
+// Todos os dados importantes para verificação de eligibilidade
 const accpetedMin = { monofasico: 400, bifasico: 500, trifasico: 750 };
 const notEligibleMsgs = {
   consClass: 'Classe de consumo não aceita',
