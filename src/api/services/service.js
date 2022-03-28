@@ -13,7 +13,7 @@ const checkEligibility = (ptData) => { // verifica eligibilidade
   const avgConsumption = avgCalculator(consHistory, consHistory.length);
 
   // calcula o consumo anual de CO2 (era para ser a economia anual de CO2)
-  const anualCO2Consumption = getCO2Consumption(consHistory);
+  const anualCO2Consumption = Number(getCO2Consumption(consHistory));
 
   // pega os campos para verificação
   const dataKeys = Object.keys(clientData);
@@ -22,7 +22,7 @@ const checkEligibility = (ptData) => { // verifica eligibilidade
   const notEligibe = dataKeys.filter((key) => !accepted.includes(clientData[key]));
 
   // verifica se a média consumida é aceita pelo valor mínimo elegível dependendo do tipo de conexão
-  if (!minConsumption(avgConsumption, connectionType)) notEligibe.push(connectionType);
+  if (!minConsumption(avgConsumption, connectionType)) notEligibe.push('connectionType');
 
   // verifica se há motivos de inegibilidade
   if (notEligibe.length) {
