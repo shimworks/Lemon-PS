@@ -6,8 +6,8 @@ const minConsumption = (avgConsumption, consuType) => avgConsumption > accpetedM
 const avgCalculator = (values, divider) => values
   .reduce((pre, cur) => pre + cur, 0) / divider;
 const getCO2Consumption = (consHistory) => (
-  consHistory.reduce((pre, cur) => pre + cur, 0) * avgCO2gen)
-  .toFixed(2);
+  Number((consHistory.reduce((pre, cur) => pre + cur, 0) * avgCO2gen).toFixed(2))
+);
 
 const enTranslator = (ptData) => {
   const {

@@ -13,7 +13,7 @@ const checkEligibility = (ptData) => { // verifica eligibilidade
   const avgConsumption = avgCalculator(consHistory, consHistory.length);
 
   // calcula o consumo anual de CO2 (era para ser a economia anual de CO2)
-  const anualCO2Consumption = Number(getCO2Consumption(consHistory));
+  const anualCO2Consumption = getCO2Consumption(consHistory);
 
   // pega os campos para verificação
   const dataKeys = Object.keys(clientData);

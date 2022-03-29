@@ -18,8 +18,8 @@ const {
 } = require('../mockData')
 
 
-describe('succefull response', () => {
-  it('All correct data', async () => {
+describe('All correct data should return', () => {
+  it('Succefull response', async () => {
     const response = await request(app)
       .post('/')
       .send(correctData);
@@ -28,55 +28,53 @@ describe('succefull response', () => {
   });
 });
 
-describe('unsuccessful response, not eligible', () => {
-  it('consumption class', async () => {
+describe('not eligible data should return', () => {
+  it('not eligible by consumption class', async () => {
     const response = await request(app)
       .post('/')
       .send(wrongClass);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(badClassRes)
   });
-  it('tariff modality', async () => {
+  it('not eligible by tariff modality', async () => {
     const response = await request(app)
       .post('/')
       .send(wrongModality);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(badModalityRes)
   });
-  it('min consumption', async () => {
+  it('not eligible by min consumption', async () => {
     const response = await request(app)
       .post('/')
       .send(wrongHistory);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(badhistoryRes)
-    console.log(response.body)
   });
-  it('All data', async () => {
+  it('not eligible by all conditions', async () => {
     const response = await request(app)
       .post('/')
       .send(wrongData);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(badData)
-    console.log(response.body)
   });
 });
 
-describe('invalid input', () => {
-  it('doc number', async () => {
+describe('should return error', () => {
+  it('with invalid doc number', async () => {
     const response = await request(app)
       .post('/')
       .send(invalidDoc);
     expect(response.status).toBe(400);
     expect(response.body).toEqual(invalidData)
   });
-  it('history size 2', async () => {
+  it('with history size 2', async () => {
     const response = await request(app)
       .post('/')
       .send(invalidHistorySizeLow);
     expect(response.status).toBe(400);
     expect(response.body).toEqual(invalidData)
   });
-  it('history size 13', async () => {
+  it('with history size 13', async () => {
     const response = await request(app)
       .post('/')
       .send(invalidHistorySizeHigh);
