@@ -21,3 +21,11 @@ Para checar a elegibilidade iremos aplicar os seguintes critérios:
         - Clientes com tipo de conexão Bifásica só são elegíveis caso tenham consumo médio acima de 500 kWh.
         - Clientes com tipo de conexão Trifásica só são elegíveis caso tenham consumo médio acima de 750 kWh.
 - Para calcular a projeção da **economia anual** de CO2, considere que para serem gerados 1000 kWh no Brasil são emitidos em média 84kg de CO2.
+
+
+### Comandos para o terminal
+
+`npm install` para instalar as dependencias
+`npm start` para iniciar aplicação
+`npx jest --coverage` para gerar relatorio de cobertura de testes
+`npm test` para rodar os testes
