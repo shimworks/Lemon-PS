@@ -1,12 +1,28 @@
-const { notEligibleMsgs, accepted } = require('../../helpers/schemes');
+const {
+  notEligibleMsgs, accepted, eligiblePerClass,
+  allSubClass,
+} = require('../../helpers/schemes');
 const {
   minConsumption, getCO2Consumption, avgCalculator, enTranslator,
 } = require('../../helpers/functions');
 
+const subClassValidator = (consClass, subClass) => {
+  if (!allSubClass.includes(subClass)) {
+    return 'invalidSubClass';
+  }
+  if (!eligiblePerClass[consClass].elegiveis.includes(subClass)) {
+    return 'notEligibleSubClass';
+  }
+  if (eligiblePerClass[consClass].naoElegiveis.includes(subClass)) {
+    return 'notFromClass';
+  }
+  return null;
+};
+
 const checkEligibility = (ptData) => { // verifica eligibilidade
   // troca os nomes dos campos para manter o código em ingles
   const {
-    consHistory, docNum, connectionType, ...clientData
+    consHistory, docNum, connectionType, subClass, ...clientData
   } = enTranslator(ptData);
 
   // calcula a média de energia consumida
@@ -20,7 +36,10 @@ const checkEligibility = (ptData) => { // verifica eligibilidade
 
   // pega os campos não aceitos
   const notEligibe = dataKeys.filter((key) => !accepted.includes(clientData[key]));
-
+  const subClassNotEligible = subClassValidator(clientData.consClass, subClass);
+  if (subClassNotEligible) {
+    notEligibe.push(subClassNotEligible);
+  }
   // verifica se a média consumida é aceita pelo valor mínimo elegível dependendo do tipo de conexão
   if (!minConsumption(avgConsumption, connectionType)) notEligibe.push('connectionType');
 

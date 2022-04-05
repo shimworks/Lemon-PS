@@ -2,7 +2,6 @@
 const { cpf, cnpj } = require('cpf-cnpj-validator');
 
 module.exports = (req, _res, next) => {
-  console.log(cpf.generate(), cnpj.generate());
   const { numeroDoDocumento, historicoDeConsumo } = req.body;
   const correctSize = historicoDeConsumo.length >= 3 && historicoDeConsumo.length <= 12;
   if (numeroDoDocumento.length === 11) {

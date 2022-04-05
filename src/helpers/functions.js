@@ -16,8 +16,10 @@ const enTranslator = (ptData) => {
     tipoDeConexao: connectionType,
     classeDeConsumo: consClass,
     modalidadeTarifaria: tariffMod,
+    subclasseDeConsumo: subClass,
   } = ptData;
   return {
+    subClass,
     consHistory,
     docNum,
     connectionType,
