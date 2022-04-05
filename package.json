@@ -21,6 +21,7 @@
   "homepage": "https://github.com/shimworks/Lemon-PS#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "cpf-cnpj-validator": "^1.0.3",
     "express": "^4.17.3",
     "express-rescue": "^1.1.31"
   },

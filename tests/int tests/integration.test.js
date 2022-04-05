@@ -2,7 +2,10 @@ const request = require('supertest');
 const app = require('../../src/app');
 const {
   correctData,
-  invalidDoc,
+  invalidCPF,
+  invalidCNPJ,
+  invalidCPFresp,
+  invalidCNPJresp,
   invalidHistorySizeHigh,
   invalidHistorySizeLow,
   goodRes,
@@ -60,13 +63,20 @@ describe('not eligible data should return', () => {
 });
 
 describe('should return error', () => {
-  it('with invalid doc number', async () => {
+  it('with invalid cpf number', async () => {
     const response = await request(app)
       .post('/')
-      .send(invalidDoc);
+      .send(invalidCPF);
     expect(response.status).toBe(400);
-    expect(response.body).toEqual(invalidData)
+    expect(response.body).toEqual(invalidCPFresp)
   });
+    it('with invalid cpf number', async () => {
+      const response = await request(app)
+        .post('/')
+        .send(invalidCNPJ);
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual(invalidCNPJresp)
+    });
   it('with history size 2', async () => {
     const response = await request(app)
       .post('/')
